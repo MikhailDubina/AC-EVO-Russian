@@ -32,7 +32,7 @@ if not exist "!SRC!ru.loc" (
 echo Searching for game...
 set "GAME="
 set "GPFILE=%TEMP%\acevo_gamepath.txt"
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0find_game.ps1" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\find_game.ps1" >nul 2>&1
 if exist "%GPFILE%" (
   for /f "usebackq delims=" %%a in ("%GPFILE%") do set "GAME=%%a"
   del /q "%GPFILE%" 2>nul
@@ -67,7 +67,7 @@ if exist "!GAME!\content\uiresources\js\components.js" (
     echo.
     echo uiresources not found. Extracting from content.kspkg into content\...
     if not exist "!UIROOT!" mkdir "!UIROOT!" 2>nul
-    set "PYSCRIPT=%~dp0parse_kspkg.py"
+    set "PYSCRIPT=!SAFEROOT!\parse_kspkg.py"
     if not exist "!PYSCRIPT!" (
       echo.
       echo parse_kspkg.py not found. Place it next to this bat ^(see README, ace-kspkg^).
