@@ -68,21 +68,25 @@ if not exist "!TGT!" (
 )
 
 echo.
-echo Replacing Chinese locale with Russian (cn.loc, cn.cars.loc, cn.tooltips.loc)...
+echo Replacing Chinese locale with Russian (cn.loc, cn.cars.loc, cn.tooltips.loc, cn_extra strings.loc)...
 if defined USECN (
   copy /Y "!SRC!cn.loc" "!TGT!\cn.loc" >nul
   if errorlevel 1 ( echo ERROR: copy failed. & pause & exit /b 1 )
   copy /Y "!SRC!cn.cars.loc" "!TGT!\cn.cars.loc" >nul
   copy /Y "!SRC!cn.tooltips.loc" "!TGT!\cn.tooltips.loc" >nul
   if exist "!SRC!cn.cars.release.loc" copy /Y "!SRC!cn.cars.release.loc" "!TGT!\cn.cars.release.loc" >nul
+  if exist "!SRC!cn.loc" copy /Y "!SRC!cn.loc" "!TGT!\cn_extra strings.loc" >nul
 ) else (
   copy /Y "!SRC!ru.loc" "!TGT!\cn.loc" >nul
   if errorlevel 1 ( echo ERROR: copy failed. & pause & exit /b 1 )
   copy /Y "!SRC!ru.cars.loc" "!TGT!\cn.cars.loc" >nul
   copy /Y "!SRC!ru.tooltips.loc" "!TGT!\cn.tooltips.loc" >nul
   if exist "!SRC!ru.cars.release.loc" copy /Y "!SRC!ru.cars.release.loc" "!TGT!\cn.cars.release.loc" >nul
+  copy /Y "!SRC!ru.loc" "!TGT!\cn_extra strings.loc" >nul
 )
 echo Done. Chinese language slot now shows Russian.
+echo.
+echo If interface is still Chinese: game may be reading from content.kspkg. Use install_ru.bat to extract uiresources first, then run this again.
 echo.
 echo In game: Settings - General - Language - 中文. Interface will be in Russian.
 echo.
