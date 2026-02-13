@@ -75,11 +75,16 @@ if not defined GAME (
 set "TGT=!GAME!\uiresources\localization"
 if not exist "!TGT!" (
   echo.
-  echo ERROR: Folder not found: !TGT!
-  echo Check game path. Make sure this is the correct Assetto Corsa EVO folder.
+  echo Folder not found, creating: !TGT!
+  mkdir "!TGT!" 2>nul
+  if not exist "!TGT!" (
+    echo ERROR: Could not create folder. Check path and permissions.
+    echo.
+    pause
+    exit /b 1
+  )
+  echo Folder created.
   echo.
-  pause
-  exit /b 1
 )
 
 echo.
