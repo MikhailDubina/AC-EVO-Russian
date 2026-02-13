@@ -208,6 +208,21 @@ if ($content -notmatch 'data-tooltip=\"tooltipSettingsControls\"') {
     Write-Host "Patch 3 skipped: settings tile tooltips already present."
 }
 
+# Patch 4: add "ru" to language slider values in Settings template (so Russian appears in dropdown)
+$langValuesOld = "values='[\"en\", \"es\", \"de\", \"fr\", \"it\", \"cn\"]'"
+$langValuesNew = "values='[\"en\", \"es\", \"de\", \"fr\", \"it\", \"cn\", \"ru\"]'"
+if ($content.IndexOf($langValuesNew) -lt 0) {
+    if ($content.IndexOf($langValuesOld) -ge 0) {
+        $content = $content.Replace($langValuesOld, $langValuesNew)
+        $modified = $true
+        Write-Host "Patch 4 OK: added Russian to language slider template."
+    } else {
+        Write-Host "Patch 4 skipped: language slider values not found or already include 'ru'."
+    }
+} else {
+    Write-Host "Patch 4 skipped: language slider already has Russian."
+}
+
 if ($modified) {
     [System.IO.File]::WriteAllText($jsPath, $content, [System.Text.UTF8Encoding]::new($false))
     Write-Host "components.js patched. Start the game and choose Russian in Settings -> General -> Language."
