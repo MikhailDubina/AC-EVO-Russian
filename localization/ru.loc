@@ -104,6 +104,10 @@ settingsHud=ИНТЕРФЕЙС
 settingsCredits=АВТОРЫ
 settingsEULA=ЛИЦЕНЗИЯ
 
+tooltipSettingsControls=Настройки руля, педалей и силы обратной связи
+tooltipSettingsVideo=Настройки графики и отображения
+tooltipSettingsAudio=Настройки звука и громкости
+
 lblGameplaySettings=ИГРОВОЙ ПРОЦЕСС
 lblHUDSettings=ИНТЕРФЕЙС
 
@@ -221,7 +225,7 @@ msgSavingDriverProfile=Saving driver profile.
 msgOperationTooLong=Operation taking too long - please try again later.
 lblAreYouSure=Вы уверены?
 lblExitGame=Выход из игры
-msgAreYouSureExitGame=Are you sure you want to quit the game?
+msgAreYouSureExitGame=Вы уверены, что хотите выйти из игры?
 
 lblChangesDefault=Warning: Default Settings
 msgViewSettingsDefault=Apply default settings?
@@ -548,8 +552,8 @@ videoOptionMedium=MEDIUM
 videoOptionHigh=HIGH
 videoOptionUltra=ULTRA
 
-lblOnUpper=ON
-lblOffUpper=OFF
+lblOnUpper=ВКЛ
+lblOffUpper=ВЫКЛ
 lblFreeUpper=FREE
 
 lblErrorLoadingProfile=Error Loading Profile
@@ -563,16 +567,16 @@ BACKENDDISCONNECTED=There was an error contacting the server, please try again.
 
 
 headerActiveDriver=ACTIVE DRIVER
-labelName=FIRST NAME
-labelSurname=LAST NAME
-labelNickname=NICKNAME
-labelNationality=COUNTRY / TERRITORY
+labelName=ИМЯ
+labelSurname=ФАМИЛИЯ
+labelNickname=ПСЕВДОНИМ
+labelNationality=СТРАНА / РЕГИОН
 btnEditDriverInfo=EDIT DRIVER INFO
 headerSwitchDriverProfile=SWITCH DRIVER PROFILE
 btnCreateNewDriver=CREATE NEW DRIVER
 labelDriverProfiles=Driver Profiles
-labelProfileUpper=PROFILE
-labelStatisticsUpper=STATISTICS
+labelProfileUpper=ПРОФИЛЬ
+labelStatisticsUpper=СТАТИСТИКА
 
 labelOnline=ONLINE
 labelOffline=OFFLINE
@@ -581,13 +585,13 @@ labelOnlineServices=ONLINE SERVICES
 headerNoActiveDriver=NO ACTIVE DRIVER
 headerNoDriversAvailable=NO DRIVERS AVAILABLE
 
-labelCountry=COUNTRY / TERRITORY
+labelCountry=СТРАНА / РЕГИОН
 
 labelSkill=SKILL
 labelSafety=SAFETY
 labelCompetitiveness=COMPETITIVENESS
-labelInitials=INITIALS
-labelAge=AGE
+labelInitials=ИНИЦИАЛЫ
+labelAge=ВОЗРАСТ
 
 
 msgInvalidFilename=Invalid file name: only letters (A–Z, a–z), numbers (0–9), underscores (_) and hyphens (-) are allowed.
@@ -623,7 +627,7 @@ GameModeType_HOTLAP=HOTLAP
 GameModeType_HOTLAP=HOTLAP
 GameModeType_HOTSTINT=HOTSTINT
 GameModeType_HOTSTINT=HOTSTINT
-GameModeType_INSTANT_RACE=QUICK RACE
+GameModeType_INSTANT_RACE=БЫСТРАЯ ГОНКА
 GameModeType_PRACTICE=ПРАКТИКА
 GameModeType_QUALIFYING=КВАЛИФИКАЦИЯ
 GameModeType_RACE_WEEKEND=ГОНОЧНЫЙ УИК-ЕНД
@@ -635,39 +639,39 @@ GameModeType_WARMUP=WARMUP
 GameModeType_TRACKDAY=ТРЕКОВЫЙ ДЕНЬ
 
 
-GameModeSelectionWeatherType_CLEAR=CLEAR
+GameModeSelectionWeatherType_CLEAR=ЯСНО
 GameModeSelectionWeatherType_SCATTERED_CLOUDS=ПЕРЕМЕННАЯ ОБЛАЧНОСТЬ
-GameModeSelectionWeatherType_BROKEN_CLOUDS=BROKEN CLOUDS
-GameModeSelectionWeatherType_OVERCAST=OVERCAST
-GameModeSelectionWeatherType_DRIZZLE=DRIZZLE
-GameModeSelectionWeatherType_RAIN=RAIN
-GameModeSelectionWeatherType_DAMP=DAMP
-GameModeSelectionWeatherType_HEAVY_RAIN=HEAVY RAIN
-GameModeSelectionWeatherType_CUSTOM=CUSTOM
+GameModeSelectionWeatherType_BROKEN_CLOUDS=ОБЛАЧНО С ПРОЯСНЕНИЯМИ
+GameModeSelectionWeatherType_OVERCAST=ПАСМУРНО
+GameModeSelectionWeatherType_DRIZZLE=МОРОСЬ
+GameModeSelectionWeatherType_RAIN=ДОЖДЬ
+GameModeSelectionWeatherType_DAMP=СЫРО
+GameModeSelectionWeatherType_HEAVY_RAIN=ЛИВЕНЬ
+GameModeSelectionWeatherType_CUSTOM=СВОЙ
 
-AssistPresetListType_BEGINNER=BEGINNER
-AssistPresetListType_ROOKIE=ROOKIE
-AssistPresetListType_EXPERT=EXPERT
-AssistPresetListType_PRO=PRO
-AssistPresetListType_CUSTOM=CUSTOM
+AssistPresetListType_BEGINNER=НОВИЧОК
+AssistPresetListType_ROOKIE=ЛЮБИТЕЛЬ
+AssistPresetListType_EXPERT=ЭКСПЕРТ
+AssistPresetListType_PRO=ПРО
+AssistPresetListType_CUSTOM=СВОЙ
 
-AssistPresetListType_BEGINNER_lower=Beginner
-AssistPresetListType_ROOKIE_lower=Rookie
-AssistPresetListType_EXPERT_lower=Expert
-AssistPresetListType_PRO_lower=Pro
-AssistPresetListType_CUSTOM_lower=Custom
+AssistPresetListType_BEGINNER_lower=Новичок
+AssistPresetListType_ROOKIE_lower=Любитель
+AssistPresetListType_EXPERT_lower=Эксперт
+AssistPresetListType_PRO_lower=Про
+AssistPresetListType_CUSTOM_lower=Свой
 
-lblAssistAutoGear=AUTOMATIC GEARBOX
-lblAssistAutomaticIgnition=AUTOMATIC IGNITION
-lblAssistAutoPitlimiter=AUTOMATIC PIT LIMITER
-lblAssistAutoClutch=AUTOMATIC CLUTCH
-lblAssistAutoClutchStart=AUTOMATIC CLUTCH ON START
-lblAssistStandingStart=STANDING START ASSIST
-lblAssistAutoBlip=AUTOMATIC THROTTLE BLIP
-lblAssistAutoHeadlights=AUTOMATIC HEADLIGHTS
-lblAssistAutoWipers=AUTOMATIC WIPERS
-lblAssistStabilityControl=STABILITY CONTROL
-lblAssistIdealLine=IDEAL LINE
+lblAssistAutoGear=АВТОМАТИЧЕСКАЯ КОРОБКА
+lblAssistAutomaticIgnition=АВТОМАТИЧЕСКОЕ ЗАЖИГАНИЕ
+lblAssistAutoPitlimiter=АВТОМАТИЧЕСКИЙ ОГРАНИЧИТЕЛЬ ПИТ-ЛЕЙНА
+lblAssistAutoClutch=АВТОМАТИЧЕСКОЕ СЦЕПЛЕНИЕ
+lblAssistAutoClutchStart=АВТОМАТИЧЕСКОЕ СЦЕПЛЕНИЕ ПРИ СТАРТЕ
+lblAssistStandingStart=ПОМОЩЬ ПРИ СТАРТЕ С МЕСТА
+lblAssistAutoBlip=АВТОМАТИЧЕСКИЙ ПОДСОС
+lblAssistAutoHeadlights=АВТОМАТИЧЕСКИЙ СВЕТ ФАР
+lblAssistAutoWipers=АВТОМАТИЧЕСКИЕ ДВОРНИКИ
+lblAssistStabilityControl=КОНТРОЛЬ СТАБИЛЬНОСТИ
+lblAssistIdealLine=ИДЕАЛЬНАЯ ТРАЕКТОРИЯ
 
 lblLoadingDataFromServer=Contacting server for session statistics.
 lblCannotRetrieveData=Could not retrieve data. Statistics will be added to your profile later.
@@ -703,7 +707,7 @@ lblBuyVehicles=BUY VEHICLES
 lblBuyParts=BUY PARTS
 lblCustomize=CUSTOMIZE
 
-lwrPassword=password
+lwrPassword=пароль
 lwrRequired=required
 lwrNumeric=numeric
 lwrThreeLetters=3 letters
@@ -718,44 +722,44 @@ labelIntegrity=Integrity
 labelNextService=Next Service
 labelSpecifications=Specifications
 
-WeatherPreset_CLEAR=CLEAR
-WeatherPreset_SUNNY=SUNNY
-WeatherPreset_CLOUDY=CLOUDY
-WeatherPreset_RAINY=RAINY
-WeatherPreset_HEAVY_RAIN=HEAVY RAIN
+WeatherPreset_CLEAR=ЯСНО
+WeatherPreset_SUNNY=СОЛНЕЧНО
+WeatherPreset_CLOUDY=ОБЛАЧНО
+WeatherPreset_RAINY=ДОЖДЛИВО
+WeatherPreset_HEAVY_RAIN=ЛИВЕНЬ
 
 lblCustom=CUSTOM
 
-lblCloudCoverage=SKY COVERAGE
+lblCloudCoverage=ОБЛАЧНОСТЬ НЕБА
 lblCloudLevel=CLOUD LEVEL
 lblCloudWetness=CLOUD WETNESS
 lblCloudDensity=CLOUD DENSITY
-lblPrecipitation=PRECIPITATION
+lblPrecipitation=ОСАДКИ
 lblRainfall=RAINFALL
-lblFogDensity=FOG DENSITY
-lblWindDirection=WIND DIRECTION
-lblWindSpeed=WIND SPEED
+lblFogDensity=ПЛОТНОСТЬ ТУМАНА
+lblWindDirection=НАПРАВЛЕНИЕ ВЕТРА
+lblWindSpeed=СКОРОСТЬ ВЕТРА
 lblWindGusts=WIND GUSTS
 lblAmbientTemperature=AMBIENT TEMPERATURE
 lblAirTemperature=AIR TEMPERATURE
 lblTarmacTemperature=TARMAC TEMPERATURE
 lblTrackCondition=TRACK CONDITION
 lblTrackWetness=TRACK WETNESS
-lblDynamicWeather=DYNAMIC WEATHER
+lblDynamicWeather=ДИНАМИЧЕСКАЯ ПОГОДА
 
-GameModeSelectionWeatherBehaviour_STATIC=STATIC
-GameModeSelectionWeatherBehaviour_DYNAMIC=DYNAMIC
+GameModeSelectionWeatherBehaviour_STATIC=СТАТИЧНО
+GameModeSelectionWeatherBehaviour_DYNAMIC=ДИНАМИЧНО
 
-GameModeSelectionDuration_TIME=time
-GameModeSelectionDuration_LAPS=laps
+GameModeSelectionDuration_TIME=время
+GameModeSelectionDuration_LAPS=круги
 
-labelLaps=LAPS
-labelTime=TIME
+labelLaps=КРУГИ
+labelTime=ВРЕМЯ
 
 labelAbbHour=HR
 labelAbbHours=HRS
 labelAbbrMinute=MIN
-labelAbbrMinutes=MINS
+labelAbbrMinutes=МИН
 
 lblAxis=AXIS
 lblClear=CLEAR
@@ -1023,32 +1027,32 @@ lblTriggerOn=Trigger On
 lblTriggerAfter=Trigger After
 lblTriggerEvery=Trigger Every
 
-controlsAbsGain=ABS Effects
-controlsCurbsGain=Curbs Effects
+controlsAbsGain=Эффект АБС
+controlsCurbsGain=Эффект бордюров
 controlsCurvature=Curvature
-controlsDamperGain=Damper Gain
+controlsDamperGain=Усиление демпфера
 controlsDeadzone=Deadzone
-controlsDynamicDamping=Dynamic Damping
-controlsFfbGain=FFB Gain
+controlsDynamicDamping=Динамическое демпфирование
+controlsFfbGain=Усиление FFB
 controlsGamepadVibrations=Vibrations
-controlsGForceGain=Road Effects
+controlsGForceGain=Эффект дороги
 controlsLimitOversteer=Oversteer Limit
-controlsMinDamper=Minimum Damper
+controlsMinDamper=Мин. демпфер
 controlsMinimumFfb=Minimum FFB
-controlsRoadEffects=Road Effects
+controlsRoadEffects=Эффект дороги
 controlsRumbleGain=Rumble Effects
 controlsSaturationX=Saturation X
 controlsSaturationY=Saturation Y
-controlsSlipsGain=Tyre Slips Effects
+controlsSlipsGain=Эффект проскальзывания
 controlsSoftLock=Soft Lock
 controlsSpeedSensitivity=Speed Sensitivity
-controlsSteerAssistWeight=Steering Assist
+controlsSteerAssistWeight=Помощь руления
 controlsSteerFilter=Steering Filter
-controlsSteerLock=Steering Lock
-controlsSteerLockTip=In-game steering lock should match your wheel's firmware steering angle/range/sensitivity.
-controlsTrueForceGain=Audio-based FFB Effects
+controlsSteerLock=Угол поворота руля
+controlsSteerLockTip=Угол в игре должен совпадать с углом/диапазоном/чувствительностью руля в прошивке.
+controlsTrueForceGain=FFB-эффекты по звуку
 
-lblFFBEnhancements=FFB ENHANCEMENTS
+lblFFBEnhancements=УСИЛЕНИЕ FFB
 lblAllowedModifiers=Allowed Modifier Keys
 msgAlreadyBoundAxis=That axis is already bound to
 msgAlreadyBoundButton=That button is already bound to
@@ -1065,37 +1069,37 @@ lblSearchServers=поиск серверов
 lblSearch=search
 lblNone=Нет
 
-lblPracticeDuration=PRACTICE DURATION
-lblPracticeStartTime=PRACTICE START TIME
-lblQualifyingDuration=QUALIFYING DURATION
-lblQualifyingStartTime=QUALIFYING START TIME
+lblPracticeDuration=ДЛИТЕЛЬНОСТЬ ПРАКТИКИ
+lblPracticeStartTime=ВРЕМЯ СТАРТА ПРАКТИКИ
+lblQualifyingDuration=ДЛИТЕЛЬНОСТЬ КВАЛИФИКАЦИИ
+lblQualifyingStartTime=ВРЕМЯ СТАРТА КВАЛИФИКАЦИИ
 
-lblWarmupDuration=WARM-UP DURATION
-lblWarmupStartTime=WARM-UP START TIME
+lblWarmupDuration=ДЛИТЕЛЬНОСТЬ РАЗМИНКИ
+lblWarmupStartTime=ВРЕМЯ СТАРТА РАЗМИНКИ
 
-lblQualifyingDuration=QUALIFYING DURATION
-lblQualifyingStartTime=QUALIFYING START TIME
+lblQualifyingDuration=ДЛИТЕЛЬНОСТЬ КВАЛИФИКАЦИИ
+lblQualifyingStartTime=ВРЕМЯ СТАРТА КВАЛИФИКАЦИИ
 
-lblRaceType=RACE TYPE
-lblRaceDuration=RACE DURATION
-lblRaceStartTime=RACE START TIME
-lblRaceStartingPosition=GRID STARTING POSITION
-lblRaceTimeMultiplier=RACE TIME MULTIPLIER
-lblWarmupTimeMultiplier=WARM-UP TIME MULTIPLIER
-lblQualiTimeMultiplier=QUALIFYING TIME MULTIPLIER
-lblPracticeTimeMultiplier=PRACTICE TIME MULTIPLIER
+lblRaceType=ТИП ГОНКИ
+lblRaceDuration=ДЛИТЕЛЬНОСТЬ ГОНКИ
+lblRaceStartTime=ВРЕМЯ СТАРТА ГОНКИ
+lblRaceStartingPosition=СТАРТОВАЯ ПОЗИЦИЯ НА СЕТКЕ
+lblRaceTimeMultiplier=МНОЖИТЕЛЬ ВРЕМЕНИ ГОНКИ
+lblWarmupTimeMultiplier=МНОЖИТЕЛЬ ВРЕМЕНИ РАЗМИНКИ
+lblQualiTimeMultiplier=МНОЖИТЕЛЬ ВРЕМЕНИ КВАЛИФИКАЦИИ
+lblPracticeTimeMultiplier=МНОЖИТЕЛЬ ВРЕМЕНИ ПРАКТИКИ
 
-lblGridType=GRID TYPE
+lblGridType=ТИП СЕТКИ
 lblOpponentsUpper=OPPONENTS
 lblOpponents=OPPONENTS
 lblSkillUpper=SKILL
 lblBehaviourUpper=BEHAVIOUR
-lblNumberOfOpponents=NUMBER OF OPPONENTS
-lblOpponentSkill=OPPONENT SKILL
+lblNumberOfOpponents=ЧИСЛО СОПЕРНИКОВ
+lblOpponentSkill=УРОВЕНЬ СОПЕРНИКОВ
 lblOpponentConsistency=OPPONENT CONSISTENCY
 lblOpponentAggressiveness=OPPONENT AGGRESSIVENESS
 
-labelAcademyWeather=Weather:
+labelAcademyWeather=Погода:
 labelAcademyTrackStatus=Track conditions
 
 da_caption_sp-01=YOUR FIRST HAIRPIN
@@ -1135,20 +1139,20 @@ lblMinuteLower=min
 lblLapsLower=laps
 lblLapLower=lap
 
-lblGridType=GRID TYPE
-lblAutomatic=AUTOMATIC
+lblGridType=ТИП СЕТКИ
+lblAutomatic=АВТОМАТИЧЕСКИ
 lblEditGrid=EDIT GRID
 
-lblWeatherMode=WEATHER
-lblDynamic=DYNAMIC
-lblStatic=STATIC
+lblWeatherMode=ПОГОДА
+lblDynamic=ДИНАМИЧЕСКИ
+lblStatic=СТАТИЧЕСКИ
 
 lblClassWeights=CLASS WEIGHTS
 lblGenerateGrid=GENERATE GRID
-lblSingleMake=SINGLE MAKE
+lblSingleMake=ОДИН АВТОПРОИЗВОДИТЕЛЬ
 
-lblConfiguration=CONFIGURATION
-lblTrim=TRIM
+lblConfiguration=КОНФИГУРАЦИЯ
+lblTrim=КОМПЛЕКТАЦИЯ
 
 msgCannotPurchaseVehicle=You cannot purchase this vehicle at the moment.
 msgWrongCarSelected=Wrong car selected for this server.
@@ -1350,11 +1354,11 @@ msgGameUpdateRequired=Game update required to use this feature
 lblReplayUpper=РЕПЛЕЙ
 lblPhotographsUpper=PHOTOGRAPHS
 
-lblSessions=SESSIONS
-btnResume=RESUME
+lblSessions=СЕССИИ
+btnResume=ПРОДОЛЖИТЬ
 btnDefault=DEFAULT
-btnReturnPitlane=BACK TO PITLANE
-btnReturnToMainMenu=EXIT TO MAIN MENU
+btnReturnPitlane=ВЕРНУТЬСЯ В ПИТ-ЛЕЙН
+btnReturnToMainMenu=ВЫЙТИ В ГЛАВНОЕ МЕНЮ
 btnDefaultSetup=СТАНДАРТНАЯ НАСТРОЙКА
 
 lblXPReceived=XP RECEIVED
@@ -1373,7 +1377,7 @@ lblStartUpper=START
 lblResetUpper=RESET
 lblPleaseSelectTrack=PLEASE SELECT A TRACK
 lblAvailableShowrooms=Available Showrooms
-lblAvailableWeatherPresets=Available Weather Presets
+lblAvailableWeatherPresets=Доступные пресеты погоды
 lblAvailableHDRIPresets=Available HDRI Presets
 
 InvestigationType_Racecar_Cut=Track Limits
@@ -1498,7 +1502,7 @@ viewSettingsHDR=HDR
 viewSettingsMirrors=MIRRORS
 viewSettingsMotion=MOTION
 viewSettingsTriple=TRIPLE SCREEN
-mainMenuViewSettings=VIEW SETTINGS
+mainMenuViewSettings=НАСТРОЙКИ ВИДА
 
 lblFlagFullCourse=FULL COURSE
 
@@ -1583,14 +1587,14 @@ lblInsufficientFunds=INSUFFICIENT FUNDS
 msgNotEnoughMoneyToBuyVehicle=You currently don't have enough money to purchace this vehicle.
 msgNotEnoughMoneyToRentVehicle=You currently don't have enough money to rent this vehicle.
 
-headerHome=Home
+headerHome=Главная
 
 msgFirstTestDrive=Would you like to configure settings and control bindings before entering the session?
 btnProceedToSettings=PROCEED TO SETTINGS
 headerControlPresets=CONTROL PRESETS
 
-lblTrackLength=LENGTH
-lblNumberOfPitboxes=PITBOXES
+lblTrackLength=ДЛИНА
+lblNumberOfPitboxes=ПИТ-БОКСЫ
 
 lblSessionInfoLastLap=Last Lap
 lblSessionInfoLastLapUpper=LAST LAP
@@ -1854,10 +1858,10 @@ UIInitialGrip_GREEN=GREEN
 UIInitialGrip_FAST=FAST
 UIInitialGrip_OPTIMUM=ОПТИМУМ
 
-lblOpponentBehaviour=OPPONENT BEHAVIOUR
-lblBehaviourSafe=SAFE
-lblBehaviourNormal=NORMAL
-lblBehaviourCompetitive=COMPETITIVE
+lblOpponentBehaviour=ПОВЕДЕНИЕ СОПЕРНИКОВ
+lblBehaviourSafe=ОСТОРОЖНО
+lblBehaviourNormal=НОРМАЛЬНО
+lblBehaviourCompetitive=АГРЕССИВНО
 
 lblPerformanceRange=PERFORMANCE RANGE
 
@@ -1887,12 +1891,12 @@ LICENSE_RACING_1=RACING 1
 LICENSE_RACING_2=RACING 2
 LICENSE_RACING_3=RACING 3
 
-lblTrackConditionsHeader=TRACK CONDITIONS
-lblTrackConditionsInitialGrip=INITIAL GRIP
-InitialGrip_GREEN=GREEN
-InitialGrip_FAST=FAST
+lblTrackConditionsHeader=УСЛОВИЯ ТРАССЫ
+lblTrackConditionsInitialGrip=НАЧАЛЬНОЕ СЦЕПЛЕНИЕ
+InitialGrip_GREEN=ЗЕЛЁНЫЙ
+InitialGrip_FAST=БЫСТРЫЙ
 InitialGrip_OPTIMUM=ОПТИМУМ
-lblWeatherHeader=WEATHER SETTINGS
+lblWeatherHeader=НАСТРОЙКИ ПОГОДЫ
 
 lblCareerMode=CAREER MODE
 lblSandboxMode=OPEN MODE
@@ -1904,7 +1908,7 @@ lblAudioSettingsAudioSource=ИСТОЧНИК ЗВУКА
 lblAudioSettingsCarAudio=АВТО
 lblAudioSettingsGeneral=ОБЩИЕ
 lblAudioSettingsEnvironment=ОКРУЖЕНИЕ
-lblWeatherStatusHeader=WEATHER
+lblWeatherStatusHeader=ПОГОДА
 
 lblSessionName_Practice=ПРАКТИКА
 lblSessionName_Race=ГОНКА
@@ -1926,12 +1930,12 @@ msgGoBackToReplayGallery=Do you want to go back to Replay gallery?
 lblSetupLoadSave=ЗАГРУЗИТЬ/СОХРАНИТЬ
 lblRentalSingular=RENTAL
 
-btnAllVehicles=ALL VEHICLES
+btnAllVehicles=ВСЕ АВТОМОБИЛИ
 btnOwnedVehicles=МОИ АВТОМОБИЛИ
 btnAddToGarage=ДОБАВИТЬ В ГАРАЖ
 msgAreYouSureAddToGarage=Are you sure your want to add this car to your collection?
 
-lblGamepadSettings=GAMEPAD SETTINGS
+lblGamepadSettings=НАСТРОЙКИ ГЕЙМПАДА
 
 month_1_short=Jan
 month_2_short=Feb
@@ -1973,7 +1977,7 @@ lblCarHub=АВТОЦЕНТР
 headerCarHub=Vehicle Hub
 headerMyCars=My Cars
 
-Direct=DIRECT
+Direct=ПРЯМОЙ
 Assisted=ASSISTED
 Smart=SMART
 
@@ -1981,11 +1985,11 @@ lblReadyForNextSession=READY FOR NEXT SESSION
 lblPitLimiterUpper=PIT LIMITER
 
 lblSessionEnded=THE SESSION HAS ENDED - PLEASE RETURN TO THE PITS
-lblServerPing=SERVER PING
+lblServerPing=ПИНГ СЕРВЕРА
 
 lblOfficial=OFFICIAL LEADERBOARD
-lblRealtime=REALTIME LEADERBOARD
-lblControls=CONTROLS
+lblRealtime=ТАБЛИЦА ЛИДЕРОВ В РЕАЛЬНОМ ВРЕМЕНИ
+lblControls=УПРАВЛЕНИЕ
 
 lblInfo=INFO
 lblPauseMenuMultiplayer=Car must be stopped to pause the game
@@ -2022,11 +2026,11 @@ lblLaptimePredLap=PRED LAP
 lblLaptimePreviousLap=Previous Lap
 
 lblLaptimeTotalLaps=LAP
-btnAllBrands=ALL BRANDS
+btnAllBrands=ВСЕ БРЕНДЫ
 
 Adaptive=ADAPTIVE
-Off=OFF
-On=ON
+Off=ВЫКЛ
+On=ВКЛ
 
 lblServerInfoCPU=CPU
 lblServerInfoQoS=QoS
@@ -2214,7 +2218,7 @@ msgResetOptions=The filtering parameters will be reset to match your current veh
 lblChatHeader=ЧАТ КОМНАТЫ
 lblPlaceholderTypeHere=TYPE HERE
 btnViewCurrentVehicle=VIEW CURRENT VEHICLE
-lblSearchVehicles=search vehicles
+lblSearchVehicles=поиск автомобилей
 
 lblEligibleCarsUpper=ДОПУСТИМЫЕ АВТО
 

@@ -8,17 +8,17 @@ param(
 $ErrorActionPreference = "Stop"
 
 if (-not $GamePath) {
-    $def1 = "${env:ProgramFiles(x86)}\\Steam\\steamapps\\common\\Assetto Corsa EVO"
-    $def2 = "${env:ProgramFiles}\\Steam\\steamapps\\common\\Assetto Corsa EVO"
-    if (Test-Path "$def1\\AssettoCorsaEVO.exe") { $GamePath = $def1 }
-    elseif (Test-Path "$def2\\AssettoCorsaEVO.exe") { $GamePath = $def2 }
+    $def1 = "${env:ProgramFiles(x86)}\Steam\steamapps\common\Assetto Corsa EVO"
+    $def2 = "${env:ProgramFiles}\Steam\steamapps\common\Assetto Corsa EVO"
+    if (Test-Path "$def1\AssettoCorsaEVO.exe") { $GamePath = $def1 }
+    elseif (Test-Path "$def2\AssettoCorsaEVO.exe") { $GamePath = $def2 }
     else {
-        Write-Host "Game not found at default paths. Run: .\\patch_ru.ps1 -GamePath 'C:\\path\\to\\Assetto Corsa EVO'"
+        Write-Host "Game not found at default paths. Run: .\patch_ru.ps1 -GamePath 'C:\path\to\Assetto Corsa EVO'"
         exit 1
     }
 }
 
-$jsPath = Join-Path $GamePath "uiresources\\js\\components.js"
+$jsPath = Join-Path $GamePath "uiresources\js\components.js"
 if (-not (Test-Path $jsPath)) {
     Write-Host "ERROR: File not found: $jsPath"
     exit 1
@@ -35,7 +35,7 @@ $modified = $false
 
 # Patch 1: add "ru": "РУССКИЙ" to languages object (if missing)
 if ($content.IndexOf('"ru": "РУССКИЙ"') -lt 0) {
-    $content = $content -replace '("cn":\\s*"简体中文")\\r?\\n(\\s+\\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
+    $content = $content -replace '("cn":\s*"简体中文")\r?\n(\s+\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
     if ($content.IndexOf('"ru": "РУССКИЙ"') -ge 0) {
         $modified = $true
         Write-Host "Patch 1 OK: added Russian to languages list."
@@ -78,6 +78,21 @@ if ($content -notmatch 'injectRussian') {
     }
 } else {
     Write-Host "Patch 2 skipped: injectRussian already present."
+}
+
+# Patch 3: add data-tooltip to settings tiles (CONTROLS, VIDEO, AUDIO) for Russian tooltips
+if ($content -notmatch 'data-tooltip=\"tooltipSettingsControls\"') {
+    $content = $content -replace 'data-submode=\"controls\" data-l10n-id=\"settingsControls\">CONTROLS', 'data-submode=\"controls\" data-l10n-id=\"settingsControls\" data-tooltip=\"tooltipSettingsControls\">CONTROLS'
+    $content = $content -replace 'data-submode=\"video\" data-l10n-id=\"settingsVideo\">VIDEO', 'data-submode=\"video\" data-l10n-id=\"settingsVideo\" data-tooltip=\"tooltipSettingsVideo\">VIDEO'
+    $content = $content -replace 'data-submode=\"audio\" data-l10n-id=\"settingsAudio\">AUDIO', 'data-submode=\"audio\" data-l10n-id=\"settingsAudio\" data-tooltip=\"tooltipSettingsAudio\">AUDIO'
+    if ($content -match 'data-tooltip=\"tooltipSettingsControls\"') {
+        $modified = $true
+        Write-Host "Patch 3 OK: added tooltips for Controls/Video/Audio tiles."
+    } else {
+        Write-Host "Patch 3 failed: could not find settings tiles. File may have changed."
+    }
+} else {
+    Write-Host "Patch 3 skipped: settings tile tooltips already present."
 }
 
 if ($modified) {
