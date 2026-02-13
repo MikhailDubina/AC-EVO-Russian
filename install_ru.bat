@@ -13,19 +13,20 @@ echo.
 REM Check if running from correct folder
 set "SRC=%~dp0localization"
 if not exist "%SRC%\ru.loc" (
-  echo ERROR: Localization files not found!
+  echo ERROR: Localization files not found! Installation stopped.
   echo.
-  echo Make sure you:
-  echo   1. Downloaded the ZIP archive from GitHub
-  echo   2. Extracted ALL files (should have 'localization' folder)
-  echo   3. Run install_ru.bat from the extracted folder
+  echo Open this folder in Explorer: %~dp0
+  echo Check: there must be a "localization" folder with ru.loc, ru.cars.loc inside.
   echo.
-  echo If folder is on OneDrive: right-click "localization" - "Always keep on this device"
+  echo If "localization" is missing or empty:
+  echo   - Download the ZIP again from GitHub ^(Code - Download ZIP^)
+  echo   - Extract ALL files ^(right-click ZIP - Extract All^)
+  echo   - If the folder is on OneDrive: right-click "localization" - "Always keep on this device"
   echo.
-  echo Current folder: %~dp0
-  echo Looking for: %SRC%\ru.loc
+  echo Looking for file: %SRC%\ru.loc
   echo.
-  pause
+  echo Press any key to close...
+  pause >nul
   exit /b 1
 )
 

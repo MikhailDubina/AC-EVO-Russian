@@ -10,6 +10,7 @@ echo ============================================
 echo.
 
 set "GAME="
+set "LOC="
 set "DEF1=%ProgramFiles(x86)%\Steam\steamapps\common\Assetto Corsa EVO"
 set "DEF2=%ProgramFiles%\Steam\steamapps\common\Assetto Corsa EVO"
 
@@ -21,14 +22,20 @@ if not defined GAME (
   echo Game folder not found. Enter path to game (where Assetto Corsa EVO.exe is):
   set /p GAME="Path: "
   set "GAME=!GAME:"=!"
-  if not defined GAME ( echo Not entered. & pause & exit /b 1 )
+  if not defined GAME (
+    echo Not entered.
+    echo Press any key to close...
+    pause >nul
+    exit /b 1
+  )
 )
 
 set "LOC=%GAME%\uiresources\localization"
 if not exist "%LOC%" (
   echo ERROR: Folder not found: %LOC%
   echo.
-  pause
+  echo Press any key to close...
+  pause >nul
   exit /b 1
 )
 
@@ -46,4 +53,5 @@ if errorlevel 1 (
   echo Main menu should show: Vozhdenie, Avtomobili, Akademiya, Nastrojki (in Russian).
 )
 echo.
-pause
+echo Press any key to close...
+pause >nul
