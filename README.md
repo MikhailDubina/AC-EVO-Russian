@@ -16,6 +16,8 @@
 2. **Запустите `install_ru.bat`** — один установщик для всех вариантов: найдёт игру, при необходимости извлечёт uiresources из `content.kspkg`, скопирует переводы и применит патч. Если игра не в стандартной папке Steam — введите путь по запросу.
 3. В игре: **Настройки → Общие → Язык → Русский**.
 
+**Обычное расположение игры:** `Steam\steamapps\common\Assetto Corsa EVO`. Папка `content` (с `uiresources`, интерфейсом и локалями) находится внутри этой папки; установщик сам определяет, куда копировать переводы (`content\uiresources\localization` или `uiresources\localization` в корне игры).
+
 **Если в архиве нет папки `localization` с файлами `ru.loc`** — распакуйте заново или при OneDrive: правый клик по `localization` → «Всегда сохранять на этом устройстве».
 
 **Если в корне игры только файл `content.kspkg` (папок нет):** тот же **`install_ru.bat`** сам попытается извлечь uiresources из пакета (нужны Python и `parse_kspkg.py` рядом с батником — [ace-kspkg](https://github.com/ntpopgetdope/ace-kspkg)), затем предложит переименовать `content.kspkg` в `.bak`. Если Python или скрипт нет — создаст `uiresources` в корне с запасным `components.js`.
