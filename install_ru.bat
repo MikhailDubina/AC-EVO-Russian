@@ -20,6 +20,8 @@ if not exist "%SRC%\ru.loc" (
   echo   2. Extracted ALL files (should have 'localization' folder)
   echo   3. Run install_ru.bat from the extracted folder
   echo.
+  echo If folder is on OneDrive: right-click "localization" - "Always keep on this device"
+  echo.
   echo Current folder: %~dp0
   echo Looking for: %SRC%\ru.loc
   echo.

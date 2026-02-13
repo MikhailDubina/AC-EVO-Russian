@@ -9,6 +9,22 @@ echo   Assetto Corsa EVO - Russian Localization
 echo ============================================
 echo.
 
+REM Check localization folder first (so we always show a clear error and pause)
+set "SRC=%~dp0localization"
+if not exist "%SRC%\ru.loc" (
+  echo ERROR: Localization files not found!
+  echo.
+  echo Folder: %~dp0
+  echo Looking for: %SRC%\ru.loc
+  echo.
+  echo 1. Extract the full ZIP from GitHub.
+  echo 2. If folder is on OneDrive: right-click localization - "Always keep on this device".
+  echo 3. Run install_ru.bat from the extracted folder.
+  echo.
+  pause
+  exit /b 1
+)
+
 set "GAME="
 set "DEF1=%ProgramFiles(x86)%\Steam\steamapps\common\Assetto Corsa EVO"
 set "DEF2=%ProgramFiles%\Steam\steamapps\common\Assetto Corsa EVO"
@@ -37,14 +53,6 @@ if not exist "%TGT%" (
   echo ERROR: Folder not found: %TGT%
   echo Check game path.
   echo.
-  pause
-  exit /b 1
-)
-
-set "SRC=%~dp0localization"
-if not exist "%SRC%\ru.loc" (
-  echo ERROR: Localization files not found in installer folder (localization\ru.loc etc.).
-  echo Run install.bat from extracted folder.
   pause
   exit /b 1
 )
