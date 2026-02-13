@@ -26,13 +26,27 @@ if (-not (Test-Path $jsPath)) {
         $jsPath = $found.FullName
         Write-Host "Found: $jsPath"
     } else {
+        # Fallback: use pre-patched components.js from the pack (for users with missing uiresources\js)
+        $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+        $fallbackPath = Join-Path $scriptDir "fallback\components.js"
+        if (Test-Path $fallbackPath) {
+            $jsDir = Join-Path $GamePath "uiresources\js"
+            if (-not (Test-Path $jsDir)) {
+                New-Item -ItemType Directory -Path $jsDir -Force | Out-Null
+                Write-Host "Created folder: $jsDir"
+            }
+            Copy-Item $fallbackPath $jsPath -Force
+            Write-Host "Installed components.js from fallback (Russian already in menu)."
+            Write-Host "Path: $jsPath"
+            # Skip backup and patch steps below - file is already patched
+            exit 0
+        }
         Write-Host "ERROR: File not found: $jsPath"
         Write-Host ""
         Write-Host "Without this file the game will not show 'Russian' in the language list."
         Write-Host "Translation files (ru.loc) are already installed; the patch only adds the menu entry."
         Write-Host ""
-        Write-Host "Try: In Steam - right-click Assetto Corsa EVO - Manage - Verify integrity of game files."
-        Write-Host "Then run install_ru.bat again."
+        Write-Host "If the uiresources folder is empty: In Steam - right-click Assetto Corsa EVO - Manage - Verify integrity of game files. Then run install_ru.bat again."
         Write-Host ""
         exit 1
     }
