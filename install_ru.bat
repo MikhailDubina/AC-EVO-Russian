@@ -16,9 +16,10 @@ set "DEF2=%ProgramFiles%\Steam\steamapps\common\Assetto Corsa EVO"
 
 if exist "%DEF1%\Assetto Corsa EVO.exe" set "GAME=%DEF1%"
 if not defined GAME if exist "%DEF2%\Assetto Corsa EVO.exe" set "GAME=%DEF2%"
+if not defined GAME for /f "delims=" %%a in ('powershell -NoProfile -Command "$vdf='%ProgramFiles(x86)%\Steam\steamapps\libraryfolders.vdf'; if (Test-Path $vdf) { (Get-Content $vdf -Raw) -split '\"path\"' | Select-Object -Skip 1 | ForEach-Object { if ($_ -match '\s+\"([^\"]+)\"') { $p = $matches[1].Trim().TrimEnd('\\') -replace '\\\\','\\' + '\steamapps\common\Assetto Corsa EVO'; if (Test-Path \"$p\Assetto Corsa EVO.exe\") { Write-Output $p; break } } } }" 2^>nul') do set "GAME=%%a"
 
 if not defined GAME (
-  echo Game path not found at default location.
+  echo Game path not found at default or Steam library locations.
   echo.
   set /p GAME="Enter game folder path (e.g. C:\Steam\steamapps\common\Assetto Corsa EVO): "
   set "GAME=!GAME:"=!"
