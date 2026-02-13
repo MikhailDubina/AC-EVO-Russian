@@ -1,9 +1,9 @@
 @echo off
 if "%~1"=="" (
-  start "AC EVO Russian (as Chinese)" cmd /k "%~f0" run
+  start "AC EVO - Replace Chinese with Russian" cmd /k "%~f0" run
   exit /b 0
 )
-title Assetto Corsa EVO - Russian as Chinese (no menu patch)
+title Assetto Corsa EVO - Replace Chinese with Russian
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
@@ -13,18 +13,33 @@ set "SAFEROOT="
 if exist "%ROOTFILE%" for /f "usebackq delims=" %%a in ("%ROOTFILE%") do set "SAFEROOT=%%a"
 if exist "%ROOTFILE%" del /q "%ROOTFILE%" 2>nul
 if not defined SAFEROOT set "SAFEROOT=%~dp0"
-set "SRC=!SAFEROOT!\localization\"
+REM Support both: GitHub repo (localization\ru.*.loc) and kspkg-style (resources\ru_lang\cn.*.loc)
+set "SRC_RL=!SAFEROOT!resources\ru_lang\"
+set "SRC_LOC=!SAFEROOT!localization\"
+if exist "!SRC_RL!cn.loc" (
+  set "USECN=1"
+  set "SRC=!SRC_RL!"
+) else (
+  set "USECN="
+  set "SRC=!SRC_LOC!"
+)
+REM Fallback: if path has spaces/parentheses and ru.loc not found, use batch folder
+if not defined USECN if not exist "!SRC!ru.loc" set "SRC=%~dp0localization\"
 echo.
 echo ============================================
-echo   Russian as Chinese (no kspkg unpack)
-echo   In game: select language "中文"
+echo   Replace Chinese with Russian (no menu patch)
+echo   In game: select language "中文" - interface in Russian
 echo ============================================
 echo.
 
-if not exist "!SRC!ru.loc" (
-  echo ERROR: localization\ru.loc not found. Extract archive and run again.
-  pause
-  exit /b 1
+if defined USECN (
+  if not exist "!SRC!cn.loc" ( echo ERROR: resources\ru_lang\cn.loc not found. & pause & exit /b 1 )
+) else (
+  if not exist "!SRC!ru.loc" (
+    echo ERROR: localization\ru.loc not found. Extract archive and run again.
+    pause
+    exit /b 1
+  )
 )
 
 echo Searching for game...
@@ -53,14 +68,22 @@ if not exist "!TGT!" (
 )
 
 echo.
-echo Copying Russian text as cn.*.loc (game will show it when you select "中文")...
-copy /Y "!SRC!ru.loc" "!TGT!\cn.loc" >nul
-if errorlevel 1 ( echo ERROR: copy failed. & pause & exit /b 1 )
-copy /Y "!SRC!ru.cars.loc" "!TGT!\cn.cars.loc" >nul
-copy /Y "!SRC!ru.tooltips.loc" "!TGT!\cn.tooltips.loc" >nul
-if exist "!SRC!ru.cars.release.loc" copy /Y "!SRC!ru.cars.release.loc" "!TGT!\cn.cars.release.loc" >nul
-echo Done. No menu patch applied.
+echo Replacing Chinese locale with Russian (cn.loc, cn.cars.loc, cn.tooltips.loc)...
+if defined USECN (
+  copy /Y "!SRC!cn.loc" "!TGT!\cn.loc" >nul
+  if errorlevel 1 ( echo ERROR: copy failed. & pause & exit /b 1 )
+  copy /Y "!SRC!cn.cars.loc" "!TGT!\cn.cars.loc" >nul
+  copy /Y "!SRC!cn.tooltips.loc" "!TGT!\cn.tooltips.loc" >nul
+  if exist "!SRC!cn.cars.release.loc" copy /Y "!SRC!cn.cars.release.loc" "!TGT!\cn.cars.release.loc" >nul
+) else (
+  copy /Y "!SRC!ru.loc" "!TGT!\cn.loc" >nul
+  if errorlevel 1 ( echo ERROR: copy failed. & pause & exit /b 1 )
+  copy /Y "!SRC!ru.cars.loc" "!TGT!\cn.cars.loc" >nul
+  copy /Y "!SRC!ru.tooltips.loc" "!TGT!\cn.tooltips.loc" >nul
+  if exist "!SRC!ru.cars.release.loc" copy /Y "!SRC!ru.cars.release.loc" "!TGT!\cn.cars.release.loc" >nul
+)
+echo Done. Chinese language slot now shows Russian.
 echo.
-echo In game: Settings - General - Language - 中文 (Chinese). Interface will be in Russian.
+echo In game: Settings - General - Language - 中文. Interface will be in Russian.
 echo.
 pause
