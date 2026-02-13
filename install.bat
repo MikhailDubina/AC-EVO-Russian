@@ -20,6 +20,13 @@ if not defined GAME (
   echo.
   set /p GAME="Вставьте путь к папке игры (например C:\Steam\steamapps\common\Assetto Corsa EVO): "
   set "GAME=!GAME:"=!"
+  if not defined GAME (
+    echo.
+    echo Путь не введён. Завершение.
+    echo.
+    pause
+    exit /b 1
+  )
 )
 
 set "TGT=%GAME%\uiresources\localization"
