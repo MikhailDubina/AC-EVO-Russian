@@ -20,7 +20,7 @@ function Add-RussianCssIfNeeded {
         if ($txt.IndexOf($cssMarker) -lt 0) {
             $block = @"
 
-/* $cssMarker: font and nowrap */
+/* ${cssMarker}: font and nowrap */
 @font-face {
   font-family: 'roboto';
   src: url('/fonts/roboto-regular.ttf');
@@ -57,7 +57,7 @@ html[lang="ru"] ks-page-main #panelMenu ks-btnbasic > div {
         if ($txt.IndexOf($cssMarker) -lt 0) {
             $block = @"
 
-/* $cssMarker: font and nowrap */
+/* ${cssMarker}: font and nowrap */
 html[lang="ru"]:root {
   --font-family-main: 'roboto';
   overflow-wrap: break-word;
