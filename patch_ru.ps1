@@ -2,10 +2,21 @@
 # Run from the same folder as install.bat, or pass -GamePath "C:\...\Assetto Corsa EVO".
 
 param(
-    [string] $GamePath
+    [string] $GamePath,
+    [string] $PackRoot
 )
 
 $ErrorActionPreference = "Stop"
+
+function Get-FallbackPath {
+    if ($PackRoot -and (Test-Path (Join-Path $PackRoot "fallback\components.js"))) {
+        return (Join-Path $PackRoot "fallback\components.js")
+    }
+    $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $fp = Join-Path $scriptDir "fallback\components.js"
+    if (Test-Path $fp) { return $fp }
+    return $null
+}
 
 function Add-RussianCssIfNeeded {
     param([string] $GameRoot)
@@ -102,9 +113,8 @@ if (-not (Test-Path $jsPath)) {
         Write-Host "Found: $jsPath"
     } else {
         # Fallback: use pre-patched components.js from the pack (for users with missing uiresources\js)
-        $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-        $fallbackPath = Join-Path $scriptDir "fallback\components.js"
-        if (Test-Path $fallbackPath) {
+        $fallbackPath = Get-FallbackPath
+        if ($fallbackPath) {
             $jsDir = Join-Path $GamePath "uiresources\js"
             if (-not (Test-Path $jsDir)) {
                 New-Item -ItemType Directory -Path $jsDir -Force | Out-Null
@@ -204,4 +214,19 @@ if ($modified) {
 } else {
     Write-Host "No changes needed."
 }
+
+# If Russian still not in file (patch failed e.g. game update), overwrite with fallback so language appears
+$hasRussian = ($content.IndexOf('"ru": "РУССКИЙ"') -ge 0) -or ($content.IndexOf('injectRussian') -ge 0)
+if (-not $hasRussian) {
+    $fallbackPath = Get-FallbackPath
+    if ($fallbackPath) {
+        if (-not (Test-Path ($jsPath + ".bak"))) {
+            Copy-Item $jsPath ($jsPath + ".bak") -Force
+            Write-Host "Backup created: $jsPath.bak"
+        }
+        Copy-Item $fallbackPath $jsPath -Force
+        Write-Host "Patch did not match game version. Installed fallback components.js (Russian in menu)."
+    }
+}
+
 Add-RussianCssIfNeeded -GameRoot $GamePath

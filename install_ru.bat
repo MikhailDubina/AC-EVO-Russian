@@ -110,7 +110,7 @@ if not exist "!SAFEROOT!\patch_ru.ps1" (
   echo You may need to run patch_ru.bat manually.
   echo.
 ) else (
-  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!"
+  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!" -PackRoot "!SAFEROOT!"
   if errorlevel 1 (
     echo.
     echo WARNING: Failed to apply menu patch automatically.
