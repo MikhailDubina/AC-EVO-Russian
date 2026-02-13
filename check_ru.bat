@@ -18,8 +18,15 @@ if not defined GAME (
   pause
   exit /b 1
 )
-set "LOC=!GAME!\uiresources\localization"
+if exist "!GAME!\content\uiresources\localization" (
+  set "LOC=!GAME!\content\uiresources\localization"
+  echo Layout: content\uiresources\
+) else (
+  set "LOC=!GAME!\uiresources\localization"
+  echo Layout: uiresources\
+)
 echo Game: !GAME!
+echo Localization: !LOC!
 echo.
 if not exist "!LOC!" (
   echo Folder not found: !LOC!

@@ -14,32 +14,22 @@ if exist "%ROOTFILE%" for /f "usebackq delims=" %%a in ("%ROOTFILE%") do set "SA
 if exist "%ROOTFILE%" del /q "%ROOTFILE%" 2>nul
 if not defined SAFEROOT set "SAFEROOT=%~dp0"
 set "SRC=!SAFEROOT!\localization\"
+set "DID_EXTRACT=0"
 echo.
 echo ============================================
 echo   Assetto Corsa EVO - Russian Localization
-echo   Full Installation (files + menu patch)
 echo ============================================
 echo.
 
-REM Check if running from correct folder
 if not exist "!SRC!ru.loc" (
-  echo ERROR: Localization files not found! Installation stopped.
-  echo.
-  echo Open the installation folder in Explorer.
-  echo Check: there must be a "localization" folder with ru.loc, ru.cars.loc inside.
-  echo.
-  echo If "localization" is missing or empty:
-  echo   - Download the ZIP again from GitHub ^(Code - Download ZIP^)
-  echo   - Extract ALL files ^(right-click ZIP - Extract All^)
-  echo   - If the folder is on OneDrive: right-click "localization" - "Always keep on this device"
-  echo.
-  echo Looking for file: !SRC!ru.loc
+  echo ERROR: Localization files not found. Need folder "localization" with ru.loc.
+  echo Extract the full archive and run again.
   echo.
   pause
   exit /b 1
 )
 
-echo Searching for game installation...
+echo Searching for game...
 set "GAME="
 set "GPFILE=%TEMP%\acevo_gamepath.txt"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0find_game.ps1" >nul 2>&1
@@ -47,90 +37,126 @@ if exist "%GPFILE%" (
   for /f "usebackq delims=" %%a in ("%GPFILE%") do set "GAME=%%a"
   del /q "%GPFILE%" 2>nul
 )
-if defined GAME echo Found at: !GAME!
+if defined GAME echo Found: !GAME!
 
 if not defined GAME (
   echo.
-  echo Game not found at default Steam locations.
-  echo.
   set /p GAME="Enter game folder path: "
   set "GAME=!GAME:"=!"
-  if not defined GAME (
-    echo.
-    echo Path not entered. Exiting.
-    echo.
-    pause
-    exit /b 1
-  )
+  if not defined GAME ( echo Path not entered. & pause & exit /b 1 )
   if not exist "!GAME!\AssettoCorsaEVO.exe" (
-    echo.
-    echo ERROR: Game executable not found at: !GAME!
-    echo Check the path and try again.
-    echo.
+    echo ERROR: AssettoCorsaEVO.exe not found there.
     pause
     exit /b 1
   )
 )
 
-set "TGT=!GAME!\uiresources\localization"
+REM --- Determine layout: content\uiresources, uiresources, or extract from kspkg ---
+set "KSPKG=!GAME!\content.kspkg"
+if exist "!GAME!\content\uiresources\js\components.js" (
+  set "UIROOT=!GAME!\content"
+  echo Using content\uiresources\ (full content layout).
+) else if exist "!GAME!\uiresources\js\components.js" (
+  set "UIROOT=!GAME!"
+  echo Using uiresources\ in game root.
+) else if exist "!KSPKG!" (
+  REM Only content.kspkg, no uiresources: try extract into content\
+  set "UIROOT=!GAME!\content"
+  set "UIRES=!UIROOT!\uiresources"
+  if not exist "!UIRES!\js\components.js" (
+    echo.
+    echo uiresources not found. Extracting from content.kspkg into content\...
+    if not exist "!UIROOT!" mkdir "!UIROOT!" 2>nul
+    set "PYSCRIPT=%~dp0parse_kspkg.py"
+    if not exist "!PYSCRIPT!" (
+      echo.
+      echo parse_kspkg.py not found. Place it next to this bat ^(see README, ace-kspkg^).
+      echo Creating uiresources in game root with fallback components.js instead.
+      echo To use content from package later: add parse_kspkg.py and run install again.
+      echo.
+      set "UIROOT=!GAME!"
+      set "DID_EXTRACT=0"
+    ) else (
+      python --version >nul 2>&1
+      if errorlevel 1 (
+        echo Python not found. Creating uiresources in game root with fallback.
+        set "UIROOT=!GAME!"
+      ) else (
+        python "!PYSCRIPT!" -i "!KSPKG!" --extract-dir uiresources -o "!UIROOT!"
+        if errorlevel 1 (
+          echo Extraction failed. Creating uiresources in game root with fallback.
+          set "UIROOT=!GAME!"
+        ) else (
+          if not exist "!UIRES!\js\components.js" (
+            echo Extract incomplete. Using game root + fallback.
+            set "UIROOT=!GAME!"
+          ) else (
+            echo Extracted content\uiresources\.
+            set "DID_EXTRACT=1"
+          )
+        )
+      )
+    )
+  ) else (
+    echo Using content\uiresources\.
+  )
+) else (
+  set "UIROOT=!GAME!"
+  echo Using game root ^(uiresources created if missing^).
+)
+
+set "TGT=!UIROOT!\uiresources\localization"
 if not exist "!TGT!" (
-  echo.
-  echo Folder not found, creating: !TGT!
+  echo Creating: !TGT!
   mkdir "!TGT!" 2>nul
   if not exist "!TGT!" (
-    echo ERROR: Could not create folder. Check path and permissions.
-    echo.
+    echo ERROR: Could not create folder.
     pause
     exit /b 1
   )
-  echo Folder created.
-  echo.
 )
+echo.
 
-echo.
-echo [STEP 1/2] Copying localization files...
-echo From: !SRC!
+echo [1/2] Copying localization...
 echo To: !TGT!
-echo.
 copy /Y "!SRC!ru.loc" "!TGT!\" >nul
-if errorlevel 1 (
-  echo ERROR: Failed to copy ru.loc
-  pause
-  exit /b 1
-)
+if errorlevel 1 ( echo ERROR: copy ru.loc failed. & pause & exit /b 1 )
 copy /Y "!SRC!ru.cars.loc" "!TGT!\" >nul
 copy /Y "!SRC!ru.tooltips.loc" "!TGT!\" >nul
 copy /Y "!SRC!ru.cars.release.loc" "!TGT!\" >nul
-echo Localization files copied successfully.
+echo Done.
 echo.
 
-echo [STEP 2/2] Patching game menu (adding Russian language)...
-if not exist "!SAFEROOT!\patch_ru.ps1" (
-  echo WARNING: patch_ru.ps1 not found. Skipping menu patch.
-  echo You may need to run patch_ru.bat manually.
-  echo.
-) else (
-  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!" -PackRoot "!SAFEROOT!"
+echo [2/2] Patching menu ^(Russian in Language list^)...
+if exist "!SAFEROOT!\patch_ru.ps1" (
+  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!UIROOT!" -PackRoot "!SAFEROOT!"
   if errorlevel 1 (
-    echo.
-    echo WARNING: Failed to apply menu patch automatically.
-    echo.
-    echo If uiresources\js or uiresources\css are missing: game files are incomplete.
-    echo In Steam: right-click game - Manage - Verify integrity of game files.
-    echo Then run install_ru.bat again. This pack can restore components.js only.
-    echo.
-    echo Otherwise run patch_ru.bat manually after installation.
-    echo.
+    echo WARNING: Patch had errors. In Steam: Verify integrity, then run again.
   ) else (
-    echo Menu patch applied successfully.
-    echo.
+    echo Patch OK.
   )
+) else (
+  echo WARNING: patch_ru.ps1 not found.
 )
+echo.
 
 echo ============================================
-echo   Installation Complete!
+echo   Installation complete.
 echo ============================================
 echo.
-echo One run is enough. In game: Settings - General - Language - Russian
+if "!DID_EXTRACT!"=="1" (
+  echo So the game uses extracted files, rename content.kspkg to content.kspkg.bak
+  set /p REN="Rename content.kspkg now? (Y/N): "
+  if /i "!REN!"=="Y" (
+    if exist "!KSPKG!" (
+      ren "!KSPKG!" content.kspkg.bak
+      if not errorlevel 1 echo Renamed.
+    )
+  ) else (
+    echo Remember to rename content.kspkg to .bak before starting the game.
+  )
+  echo.
+)
+echo In game: Settings - General - Language - Russian
 echo.
 pause
