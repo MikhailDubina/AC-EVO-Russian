@@ -17,5 +17,5 @@
 Если Git запросит логин/пароль — войдите в GitHub или настройте токен/SSH.
 
 После пуша в https://github.com/MikhailDubina/AC-EVO-Russian
-появится обновлённый архив: install_ru.bat, check_ru_installed.bat, localization\*.loc, README.md.
+появится обновлённый архив: install_ru.bat, patch_ru.bat, patch_ru.ps1, localization\*.loc, README.md.
 Пользователи: Code → Download ZIP → запуск install_ru.bat.

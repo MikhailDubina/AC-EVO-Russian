@@ -1,9 +1,13 @@
 @echo off
+if "%~1"=="" (
+  start "AC EVO Russian" cmd /k "%~f0" run
+  exit /b 0
+)
 title Assetto Corsa EVO - Russian Localization
-echo.
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
+echo.
 echo ============================================
 echo   Assetto Corsa EVO - Russian Localization
 echo   Full Installation (files + menu patch)
@@ -25,8 +29,7 @@ if not exist "%SRC%\ru.loc" (
   echo.
   echo Looking for file: %SRC%\ru.loc
   echo.
-  echo Press any key to close...
-  pause >nul
+  pause
   exit /b 1
 )
 
@@ -59,8 +62,7 @@ if not defined GAME (
     echo.
     echo Path not entered. Exiting.
     echo.
-    echo Press any key to close...
-    pause >nul
+    pause
     exit /b 1
   )
   if not exist "%GAME%\Assetto Corsa EVO.exe" (
@@ -68,8 +70,7 @@ if not defined GAME (
     echo ERROR: Game executable not found at: %GAME%
     echo Check the path and try again.
     echo.
-    echo Press any key to close...
-    pause >nul
+    pause
     exit /b 1
   )
 )
@@ -80,8 +81,7 @@ if not exist "%TGT%" (
   echo ERROR: Folder not found: %TGT%
   echo Check game path. Make sure this is the correct Assetto Corsa EVO folder.
   echo.
-  echo Press any key to close...
-  pause >nul
+  pause
   exit /b 1
 )
 
@@ -93,8 +93,7 @@ echo.
 copy /Y "%SRC%\ru.loc" "%TGT%\" >nul
 if errorlevel 1 (
   echo ERROR: Failed to copy ru.loc
-  echo Press any key to close...
-  pause >nul
+  pause
   exit /b 1
 )
 copy /Y "%SRC%\ru.cars.loc" "%TGT%\" >nul
@@ -127,8 +126,6 @@ echo ============================================
 echo.
 echo In game, select: Settings - General - Language - Russian
 echo.
-echo If the Russian option doesn't appear in the menu,
-echo run patch_ru.bat manually.
+echo If Russian does not appear in the language list, run patch_ru.bat once.
 echo.
-echo Press any key to close...
-pause >nul
+pause
