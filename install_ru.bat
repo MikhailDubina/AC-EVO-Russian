@@ -62,7 +62,7 @@ if not defined GAME (
     pause
     exit /b 1
   )
-  if not exist "!GAME!\Assetto Corsa EVO.exe" (
+  if not exist "!GAME!\AssettoCorsaEVO.exe" (
     echo.
     echo ERROR: Game executable not found at: !GAME!
     echo Check the path and try again.

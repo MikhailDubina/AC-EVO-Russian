@@ -8,17 +8,17 @@ param(
 $ErrorActionPreference = "Stop"
 
 if (-not $GamePath) {
-    $def1 = "${env:ProgramFiles(x86)}\Steam\steamapps\common\Assetto Corsa EVO"
-    $def2 = "${env:ProgramFiles}\Steam\steamapps\common\Assetto Corsa EVO"
-    if (Test-Path "$def1\Assetto Corsa EVO.exe") { $GamePath = $def1 }
-    elseif (Test-Path "$def2\Assetto Corsa EVO.exe") { $GamePath = $def2 }
+    $def1 = "${env:ProgramFiles(x86)}\\Steam\\steamapps\\common\\Assetto Corsa EVO"
+    $def2 = "${env:ProgramFiles}\\Steam\\steamapps\\common\\Assetto Corsa EVO"
+    if (Test-Path "$def1\\AssettoCorsaEVO.exe") { $GamePath = $def1 }
+    elseif (Test-Path "$def2\\AssettoCorsaEVO.exe") { $GamePath = $def2 }
     else {
-        Write-Host "Game not found at default paths. Run: .\patch_ru.ps1 -GamePath 'C:\path\to\Assetto Corsa EVO'"
+        Write-Host "Game not found at default paths. Run: .\\patch_ru.ps1 -GamePath 'C:\\path\\to\\Assetto Corsa EVO'"
         exit 1
     }
 }
 
-$jsPath = Join-Path $GamePath "uiresources\js\components.js"
+$jsPath = Join-Path $GamePath "uiresources\\js\\components.js"
 if (-not (Test-Path $jsPath)) {
     Write-Host "ERROR: File not found: $jsPath"
     exit 1
@@ -35,7 +35,7 @@ $modified = $false
 
 # Patch 1: add "ru": "РУССКИЙ" to languages object (if missing)
 if ($content.IndexOf('"ru": "РУССКИЙ"') -lt 0) {
-    $content = $content -replace '("cn":\s*"简体中文")\r?\n(\s+\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
+    $content = $content -replace '("cn":\\s*"简体中文")\\r?\\n(\\s+\\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
     if ($content.IndexOf('"ru": "РУССКИЙ"') -ge 0) {
         $modified = $true
         Write-Host "Patch 1 OK: added Russian to languages list."
