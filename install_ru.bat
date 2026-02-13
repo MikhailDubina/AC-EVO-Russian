@@ -46,7 +46,7 @@ if exist "%DEF1%\Assetto Corsa EVO.exe" (
   echo Found at: %GAME%
 ) else (
   echo Checking Steam library folders...
-  for /f "delims=" %%a in ('powershell -NoProfile -Command "try { $vdf='%ProgramFiles(x86)%\Steam\steamapps\libraryfolders.vdf'; if (Test-Path $vdf) { (Get-Content $vdf -Raw) -split '\"path\"' | Select-Object -Skip 1 | ForEach-Object { if ($_ -match '\s+\"([^\"]+)\"') { $p = $matches[1].Trim().TrimEnd('\\') -replace '\\\\','\\' + '\steamapps\common\Assetto Corsa EVO'; if (Test-Path \"$p\Assetto Corsa EVO.exe\") { Write-Output $p; break } } } } } catch {}" 2^>nul') do (
+  for /f "delims=" %%a in ('powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0find_game.ps1" 2^>nul') do (
     set "GAME=%%a"
     echo Found at: !GAME!
   )
