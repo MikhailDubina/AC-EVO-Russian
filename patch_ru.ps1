@@ -209,8 +209,8 @@ if ($content -notmatch 'data-tooltip=\"tooltipSettingsControls\"') {
 }
 
 # Patch 4: add "ru" to language slider values in Settings template (so Russian appears in dropdown)
-$langValuesOld = "values='[\"en\", \"es\", \"de\", \"fr\", \"it\", \"cn\"]'"
-$langValuesNew = "values='[\"en\", \"es\", \"de\", \"fr\", \"it\", \"cn\", \"ru\"]'"
+$langValuesOld = "values='[`"en`", `"es`", `"de`", `"fr`", `"it`", `"cn`"]'"
+$langValuesNew = "values='[`"en`", `"es`", `"de`", `"fr`", `"it`", `"cn`", `"ru`"]'"
 if ($content.IndexOf($langValuesNew) -lt 0) {
     if ($content.IndexOf($langValuesOld) -ge 0) {
         $content = $content.Replace($langValuesOld, $langValuesNew)
