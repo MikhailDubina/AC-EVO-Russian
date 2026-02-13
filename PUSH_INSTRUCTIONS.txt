@@ -1,0 +1,21 @@
+Как отправить изменения на GitHub
+
+Если вы только обновляли скрипты (install_ru.bat, README и т.д.):
+  1. cd AC-EVO-Localization\repo_acevo_ru
+  2. git add .
+  3. git commit -m "описание изменений"
+  4. git push origin main
+
+Если вы обновляли переводы (ru_dictionary.json):
+  1. Из папки AC-EVO-Localization запустите: python build_ru_loc.py
+  2. Затем: copy_built_to_repo.bat  (скопирует свежие .loc в repo_acevo_ru\localization)
+  3. cd repo_acevo_ru
+  4. git add localization
+  5. git commit -m "Update localization files"
+  6. git push origin main
+
+Если Git запросит логин/пароль — войдите в GitHub или настройте токен/SSH.
+
+После пуша в https://github.com/MikhailDubina/AC-EVO-Russian
+появится обновлённый архив: install_ru.bat, check_ru_installed.bat, localization\*.loc, README.md.
+Пользователи: Code → Download ZIP → запуск install_ru.bat.
