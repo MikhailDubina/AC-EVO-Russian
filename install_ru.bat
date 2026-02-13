@@ -13,6 +13,14 @@ set "SAFEROOT="
 if exist "%ROOTFILE%" for /f "usebackq delims=" %%a in ("%ROOTFILE%") do set "SAFEROOT=%%a"
 if exist "%ROOTFILE%" del /q "%ROOTFILE%" 2>nul
 if not defined SAFEROOT set "SAFEROOT=%~dp0"
+if "!SAFEROOT!"=="ERROR_PAREN_PATH" (
+  echo ERROR: This folder path contains parentheses ^(e.g. "AC evo (rus)"^).
+  echo Move the unpacked folder to a path without "(" or ")" and run again.
+  echo Example: D:\Games\AC-EVO-Russian
+  echo.
+  pause
+  exit /b 1
+)
 set "SRC=!SAFEROOT!\localization\"
 set "DID_EXTRACT=0"
 echo.
