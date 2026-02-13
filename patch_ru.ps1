@@ -20,8 +20,22 @@ if (-not $GamePath) {
 
 $jsPath = Join-Path $GamePath "uiresources\js\components.js"
 if (-not (Test-Path $jsPath)) {
-    Write-Host "ERROR: File not found: $jsPath"
-    exit 1
+    # Try to find components.js under game folder (e.g. after game update path might differ)
+    $found = Get-ChildItem -Path $GamePath -Filter "components.js" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($found) {
+        $jsPath = $found.FullName
+        Write-Host "Found: $jsPath"
+    } else {
+        Write-Host "ERROR: File not found: $jsPath"
+        Write-Host ""
+        Write-Host "Without this file the game will not show 'Russian' in the language list."
+        Write-Host "Translation files (ru.loc) are already installed; the patch only adds the menu entry."
+        Write-Host ""
+        Write-Host "Try: In Steam - right-click Assetto Corsa EVO - Manage - Verify integrity of game files."
+        Write-Host "Then run install_ru.bat again."
+        Write-Host ""
+        exit 1
+    }
 }
 
 $bakPath = $jsPath + ".bak"
