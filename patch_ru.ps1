@@ -209,18 +209,35 @@ if ($content -notmatch 'data-tooltip=\"tooltipSettingsControls\"') {
 }
 
 # Patch 4: add "ru" to language slider values in Settings template (so Russian appears in dropdown)
-$langValuesOld = "values='[`"en`", `"es`", `"de`", `"fr`", `"it`", `"cn`"]'"
-$langValuesNew = "values='[`"en`", `"es`", `"de`", `"fr`", `"it`", `"cn`", `"ru`"]'"
-if ($content.IndexOf($langValuesNew) -lt 0) {
-    if ($content.IndexOf($langValuesOld) -ge 0) {
-        $content = $content.Replace($langValuesOld, $langValuesNew)
-        $modified = $true
-        Write-Host "Patch 4 OK: added Russian to language slider template."
-    } else {
-        Write-Host "Patch 4 skipped: language slider values not found or already include 'ru'."
-    }
-} else {
+$patch4Done = $false
+# Try exact replace (template has escaped quotes: values='[\"en\", ...]')
+$langValuesOld = "values='[\`"en\`", \`"es\`", \`"de\`", \`"fr\`", \`"it\`", \`"cn\`"]'"
+$langValuesNew = "values='[\`"en\`", \`"es\`", \`"de\`", \`"fr\`", \`"it\`", \`"cn\`", \`"ru\`"]'"
+if ($content.IndexOf($langValuesNew) -ge 0) {
     Write-Host "Patch 4 skipped: language slider already has Russian."
+    $patch4Done = $true
+} elseif ($content.IndexOf($langValuesOld) -ge 0) {
+    $content = $content.Replace($langValuesOld, $langValuesNew)
+    $modified = $true
+    $patch4Done = $true
+    Write-Host "Patch 4 OK: added Russian to language slider template."
+}
+# Fallback: regex — find sliderLanguage values='[...]' and add , "ru" before ] if ru missing (any order/spacing)
+if (-not $patch4Done -and $content -match 'sliderLanguage') {
+    $ruInSlider = $content -match 'sliderLanguage[^>]*values=''[^'']*\bru\b'
+    if (-not $ruInSlider) {
+        $pattern = "(id=\\\\`"sliderLanguage\\\\`"[^>]*values='\\\\[)([^\]]*)(\\\\]')"
+        $m = [regex]::Match($content, $pattern)
+        if ($m.Success) {
+            $content = $content.Remove($m.Index, $m.Length).Insert($m.Index, $m.Groups[1].Value + $m.Groups[2].Value + ", \\`"ru\\`"" + $m.Groups[3].Value)
+            $modified = $true
+            Write-Host "Patch 4 OK: added Russian to language slider (regex fallback)."
+            $patch4Done = $true
+        }
+    }
+}
+if (-not $patch4Done -and $content.IndexOf('sliderLanguage') -ge 0) {
+    Write-Host "Patch 4 skipped: language slider values not found or already include 'ru'."
 }
 
 if ($modified) {
@@ -231,7 +248,9 @@ if ($modified) {
 }
 
 # If Russian still not in file (patch failed e.g. game update), overwrite with fallback so language appears
-$hasRussian = ($content.IndexOf('"ru": "РУССКИЙ"') -ge 0) -or ($content.IndexOf('injectRussian') -ge 0)
+$hasRussianInList = $content.IndexOf('"ru": "РУССКИЙ"') -ge 0
+$hasRuInSlider = $content -match "sliderLanguage[^>]*values='[^']*\\`"ru\\`""
+$hasRussian = $hasRussianInList -or $hasRuInSlider
 if (-not $hasRussian) {
     $fallbackPath = Get-FallbackPath
     if ($fallbackPath) {
