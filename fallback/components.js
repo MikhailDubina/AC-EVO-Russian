@@ -29328,10 +29328,13 @@
                         arr = [...arr, "ru"];
                         if (typeof el.values !== "undefined") el.values = JSON.stringify(arr);
                         else if (el.setAttribute) el.setAttribute("values", JSON.stringify(arr));
+                        if (el.slider && el.slider.values) el.slider.values = arr;
                     }
                 };
                 ksUI$1.waitForFrames(injectRussian, 12);
                 ksUI$1.waitForFrames(injectRussian, 30);
+                ksUI$1.waitForFrames(injectRussian, 60);
+                ksUI$1.waitForFrames(injectRussian, 120);
             });
 
             this.Settings.request("ReplaySettings", (response) => {

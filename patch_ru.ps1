@@ -176,10 +176,13 @@ if ($content -notmatch 'injectRussian') {
                         arr = [...arr, "ru"];
                         if (typeof el.values !== "undefined") el.values = JSON.stringify(arr);
                         else if (el.setAttribute) el.setAttribute("values", JSON.stringify(arr));
+                        if (el.slider && el.slider.values) el.slider.values = arr;
                     }
                 };
                 ksUI`$1.waitForFrames(injectRussian, 12);
                 ksUI`$1.waitForFrames(injectRussian, 30);
+                ksUI`$1.waitForFrames(injectRussian, 60);
+                ksUI`$1.waitForFrames(injectRussian, 120);
             });
 "@
     $content = $content.Replace($oldBlock, $newBlock)
@@ -191,6 +194,19 @@ if ($content -notmatch 'injectRussian') {
     }
 } else {
     Write-Host "Patch 2 skipped: injectRussian already present."
+    # Patch 2b: strengthen existing injectRussian — sync inner slider + retries at 60, 120 (if not already)
+    if ($content -match 'waitForFrames\(injectRussian, 30\)' -and $content -notmatch 'waitForFrames\(injectRussian, 60\)') {
+        $LF = "`n"
+        $content = $content.Replace("else if (el.setAttribute) el.setAttribute(""values"", JSON.stringify(arr));$LF                    }$LF                };", "else if (el.setAttribute) el.setAttribute(""values"", JSON.stringify(arr));$LF                        if (el.slider && el.slider.values) el.slider.values = arr;$LF                    }$LF                };")
+        if ($content -notmatch 'el\.slider\.values = arr') {
+            $content = $content.Replace("else if (el.setAttribute) el.setAttribute(""values"", JSON.stringify(arr));`r`n                    }`r`n                };", "else if (el.setAttribute) el.setAttribute(""values"", JSON.stringify(arr));`r`n                        if (el.slider && el.slider.values) el.slider.values = arr;`r`n                    }`r`n                };")
+        }
+        $content = $content.Replace("ksUI`$1.waitForFrames(injectRussian, 30);$LF            });", "ksUI`$1.waitForFrames(injectRussian, 30);$LF                ksUI`$1.waitForFrames(injectRussian, 60);$LF                ksUI`$1.waitForFrames(injectRussian, 120);$LF            });")
+        if ($content -notmatch 'waitForFrames\(injectRussian, 60\)') {
+            $content = $content.Replace("ksUI`$1.waitForFrames(injectRussian, 30);`r`n            });", "ksUI`$1.waitForFrames(injectRussian, 30);`r`n                ksUI`$1.waitForFrames(injectRussian, 60);`r`n                ksUI`$1.waitForFrames(injectRussian, 120);`r`n            });")
+        }
+        if ($content -match 'waitForFrames\(injectRussian, 60\)') { $modified = $true; Write-Host "Patch 2b OK: strengthened injectRussian (retries 60,120 + inner slider sync)." }
+    }
 }
 
 # Patch 3: add data-tooltip to settings tiles (CONTROLS, VIDEO, AUDIO) for Russian tooltips
