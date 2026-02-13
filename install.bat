@@ -1,11 +1,11 @@
 @echo off
+chcp 65001 >nul 2>&1
 cd /d "%~dp0"
-chcp 65001 >nul
 setlocal enabledelayedexpansion
-title Assetto Corsa EVO - Русская локализация
+title Assetto Corsa EVO - Russian Localization
 echo.
 echo ============================================
-echo   Assetto Corsa EVO - Русская локализация
+echo   Assetto Corsa EVO - Russian Localization
 echo ============================================
 echo.
 
@@ -17,13 +17,13 @@ if exist "%DEF1%\Assetto Corsa EVO.exe" set "GAME=%DEF1%"
 if not defined GAME if exist "%DEF2%\Assetto Corsa EVO.exe" set "GAME=%DEF2%"
 
 if not defined GAME (
-  echo Не найден путь к игре по умолчанию.
+  echo Game path not found at default location.
   echo.
-  set /p GAME="Вставьте путь к папке игры (например C:\Steam\steamapps\common\Assetto Corsa EVO): "
+  set /p GAME="Enter game folder path (e.g. C:\Steam\steamapps\common\Assetto Corsa EVO): "
   set "GAME=!GAME:"=!"
   if not defined GAME (
     echo.
-    echo Путь не введён. Завершение.
+    echo Path not entered. Exiting.
     echo.
     pause
     exit /b 1
@@ -33,8 +33,8 @@ if not defined GAME (
 set "TGT=%GAME%\uiresources\localization"
 if not exist "%TGT%" (
   echo.
-  echo ОШИБКА: Папка не найдена: %TGT%
-  echo Проверьте путь к игре.
+  echo ERROR: Folder not found: %TGT%
+  echo Check game path.
   echo.
   pause
   exit /b 1
@@ -42,13 +42,13 @@ if not exist "%TGT%" (
 
 set "SRC=%~dp0localization"
 if not exist "%SRC%\ru.loc" (
-  echo ОШИБКА: В папке с установщиком нет файлов локализации (localization\ru.loc и др.).
-  echo Запустите install.bat из распакованной папки.
+  echo ERROR: Localization files not found in installer folder (localization\ru.loc etc.).
+  echo Run install.bat from extracted folder.
   pause
   exit /b 1
 )
 
-echo Копирование файлов в:
+echo Copying files to:
 echo %TGT%
 echo.
 copy /Y "%SRC%\ru.loc" "%TGT%\"
@@ -57,10 +57,10 @@ copy /Y "%SRC%\ru.tooltips.loc" "%TGT%\"
 copy /Y "%SRC%\ru.cars.release.loc" "%TGT%\"
 
 echo.
-echo Готово.
+echo Done.
 echo.
-echo В игре выберите: Настройки - Общие - Язык - Русский.
-echo Если шрифт отображается квадратиками или слова переносятся некорректно,
-echo см. раздел "Шрифт и переносы" в README.
+echo In game, select: Settings - General - Language - Russian.
+echo If font shows squares or words break incorrectly,
+echo see "Font and line breaks" section in README.
 echo.
 pause
