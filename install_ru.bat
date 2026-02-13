@@ -42,7 +42,7 @@ if not exist "!SRC!ru.loc" (
 echo Searching for game installation...
 set "GAME="
 set "GPFILE=%TEMP%\acevo_gamepath.txt"
-powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\find_game.ps1" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0find_game.ps1" >nul 2>&1
 if exist "%GPFILE%" (
   for /f "usebackq delims=" %%a in ("%GPFILE%") do set "GAME=%%a"
   del /q "%GPFILE%" 2>nul
