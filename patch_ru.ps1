@@ -1,4 +1,4 @@
-# Patch Assetto Corsa EVO components.js to add Russian to the language list.
+# Patch Assetto Corsa EVO: components.js (Russian in menu) + optional CSS (font/nowrap).
 # Run from the same folder as install.bat, or pass -GamePath "C:\...\Assetto Corsa EVO".
 
 param(
@@ -6,6 +6,81 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+function Add-RussianCssIfNeeded {
+    param([string] $GameRoot)
+    $cssMarker = "AC-EVO Russian"
+    $uiCss = Join-Path $GameRoot "uiresources\css\ui.css"
+    $uiCompCss = Join-Path $GameRoot "uiresources\css\uicomponents.css"
+    $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+    $added = $false
+
+    if (Test-Path $uiCss) {
+        $txt = [System.IO.File]::ReadAllText($uiCss)
+        if ($txt.IndexOf($cssMarker) -lt 0) {
+            $block = @"
+
+/* $cssMarker: font and nowrap */
+@font-face {
+  font-family: 'roboto';
+  src: url('/fonts/roboto-regular.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'roboto';
+  src: url('/fonts/roboto-medium.ttf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'roboto';
+  src: url('/fonts/roboto-bold.ttf');
+  font-weight: 600;
+}
+html[lang="ru"]:root {
+  --font-family-main: 'roboto';
+  overflow-wrap: break-word;
+}
+html[lang="ru"] ks-page-main #panelMenu ks-btnbasic,
+html[lang="ru"] ks-page-main #panelMenu ks-btnbasic > div {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+"@
+            [System.IO.File]::AppendAllText($uiCss, $block, $utf8NoBom)
+            Write-Host "ui.css: added Russian font and nowrap."
+            $added = $true
+        }
+    }
+    if (Test-Path $uiCompCss) {
+        $txt = [System.IO.File]::ReadAllText($uiCompCss)
+        if ($txt.IndexOf($cssMarker) -lt 0) {
+            $block = @"
+
+/* $cssMarker: font and nowrap */
+html[lang="ru"]:root {
+  --font-family-main: 'roboto';
+  overflow-wrap: break-word;
+}
+html[lang="ru"] ks-page-main #panelMenu ks-btnbasic,
+html[lang="ru"] ks-page-main #panelMenu ks-btnbasic > div {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[lang="ru"] ks-page-paintshop .paintshop-body .row.controls .categoryselector .category span.label {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+"@
+            [System.IO.File]::AppendAllText($uiCompCss, $block, $utf8NoBom)
+            Write-Host "uicomponents.css: added Russian font and nowrap."
+            $added = $true
+        }
+    }
+    if (-not $added -and (Test-Path $uiCss)) { Write-Host "CSS: Russian styles already present." }
+}
 
 if (-not $GamePath) {
     $def1 = "${env:ProgramFiles(x86)}\Steam\steamapps\common\Assetto Corsa EVO"
@@ -38,7 +113,7 @@ if (-not (Test-Path $jsPath)) {
             Copy-Item $fallbackPath $jsPath -Force
             Write-Host "Installed components.js from fallback (Russian already in menu)."
             Write-Host "Path: $jsPath"
-            # Skip backup and patch steps below - file is already patched
+            Add-RussianCssIfNeeded -GameRoot $GamePath
             exit 0
         }
         Write-Host "ERROR: File not found: $jsPath"
@@ -129,3 +204,4 @@ if ($modified) {
 } else {
     Write-Host "No changes needed."
 }
+Add-RussianCssIfNeeded -GameRoot $GamePath

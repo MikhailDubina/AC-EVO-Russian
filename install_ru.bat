@@ -110,11 +110,16 @@ if not exist "!SAFEROOT!\patch_ru.ps1" (
   echo You may need to run patch_ru.bat manually.
   echo.
 ) else (
-  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!" 2>nul
+  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!"
   if errorlevel 1 (
     echo.
     echo WARNING: Failed to apply menu patch automatically.
-    echo Run patch_ru.bat manually after installation.
+    echo.
+    echo If uiresources\js or uiresources\css are missing: game files are incomplete.
+    echo In Steam: right-click game - Manage - Verify integrity of game files.
+    echo Then run install_ru.bat again. This pack can restore components.js only.
+    echo.
+    echo Otherwise run patch_ru.bat manually after installation.
     echo.
   ) else (
     echo Menu patch applied successfully.
@@ -126,8 +131,6 @@ echo ============================================
 echo   Installation Complete!
 echo ============================================
 echo.
-echo In game, select: Settings - General - Language - Russian
-echo.
-echo If Russian does not appear in the language list, run patch_ru.bat once.
+echo One run is enough. In game: Settings - General - Language - Russian
 echo.
 pause
