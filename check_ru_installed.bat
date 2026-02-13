@@ -1,9 +1,9 @@
 @echo off
+title Assetto Corsa EVO - Check Russian localization
+echo.
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
-title Assetto Corsa EVO - Check Russian localization
-echo.
 echo ============================================
 echo   Check: Russian localization in game folder
 echo ============================================
