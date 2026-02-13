@@ -148,7 +148,7 @@ $modified = $false
 
 # Patch 1: add "ru": "РУССКИЙ" to languages object (if missing)
 if ($content.IndexOf('"ru": "РУССКИЙ"') -lt 0) {
-    $content = $content -replace '("cn":\s*"简体中文")\r?\n(\s+\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
+    $content = $content -replace '("cn":\s*"简体中文")\s*,?\r?\n(\s+\};)', "`$1,`n        `"ru`": `"РУССКИЙ`"`n`$2"
     if ($content.IndexOf('"ru": "РУССКИЙ"') -ge 0) {
         $modified = $true
         Write-Host "Patch 1 OK: added Russian to languages list."
