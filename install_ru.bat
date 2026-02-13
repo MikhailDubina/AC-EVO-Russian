@@ -7,6 +7,13 @@ title Assetto Corsa EVO - Russian Localization
 chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
+set "ROOTFILE=%TEMP%\acevo_scriptroot.txt"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0write_scriptroot.ps1" >nul 2>&1
+set "SAFEROOT="
+if exist "%ROOTFILE%" for /f "usebackq delims=" %%a in ("%ROOTFILE%") do set "SAFEROOT=%%a"
+if exist "%ROOTFILE%" del /q "%ROOTFILE%" 2>nul
+if not defined SAFEROOT set "SAFEROOT=%~dp0"
+set "SRC=!SAFEROOT!\localization\"
 echo.
 echo ============================================
 echo   Assetto Corsa EVO - Russian Localization
@@ -15,11 +22,10 @@ echo ============================================
 echo.
 
 REM Check if running from correct folder
-set "SRC=%~dp0localization"
-if not exist "%SRC%\ru.loc" (
+if not exist "!SRC!ru.loc" (
   echo ERROR: Localization files not found! Installation stopped.
   echo.
-  echo Open this folder in Explorer: %~dp0
+  echo Open the installation folder in Explorer.
   echo Check: there must be a "localization" folder with ru.loc, ru.cars.loc inside.
   echo.
   echo If "localization" is missing or empty:
@@ -27,7 +33,7 @@ if not exist "%SRC%\ru.loc" (
   echo   - Extract ALL files ^(right-click ZIP - Extract All^)
   echo   - If the folder is on OneDrive: right-click "localization" - "Always keep on this device"
   echo.
-  echo Looking for file: %SRC%\ru.loc
+  echo Looking for file: !SRC!ru.loc
   echo.
   pause
   exit /b 1
@@ -35,28 +41,19 @@ if not exist "%SRC%\ru.loc" (
 
 echo Searching for game installation...
 set "GAME="
-set "DEF1=%ProgramFiles(x86)%\Steam\steamapps\common\Assetto Corsa EVO"
-set "DEF2=%ProgramFiles%\Steam\steamapps\common\Assetto Corsa EVO"
-
-if exist "%DEF1%\Assetto Corsa EVO.exe" (
-  set "GAME=%DEF1%"
-  echo Found at: %GAME%
-) else if exist "%DEF2%\Assetto Corsa EVO.exe" (
-  set "GAME=%DEF2%"
-  echo Found at: %GAME%
-) else (
-  echo Checking Steam library folders...
-  for /f "delims=" %%a in ('powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0find_game.ps1" 2^>nul') do (
-    set "GAME=%%a"
-    echo Found at: !GAME!
-  )
+set "GPFILE=%TEMP%\acevo_gamepath.txt"
+powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\find_game.ps1" >nul 2>&1
+if exist "%GPFILE%" (
+  for /f "usebackq delims=" %%a in ("%GPFILE%") do set "GAME=%%a"
+  del /q "%GPFILE%" 2>nul
 )
+if defined GAME echo Found at: !GAME!
 
 if not defined GAME (
   echo.
   echo Game not found at default Steam locations.
   echo.
-  set /p GAME="Enter game folder path (e.g. C:\Steam\steamapps\common\Assetto Corsa EVO): "
+  set /p GAME="Enter game folder path: "
   set "GAME=!GAME:"=!"
   if not defined GAME (
     echo.
@@ -65,9 +62,9 @@ if not defined GAME (
     pause
     exit /b 1
   )
-  if not exist "%GAME%\Assetto Corsa EVO.exe" (
+  if not exist "!GAME!\Assetto Corsa EVO.exe" (
     echo.
-    echo ERROR: Game executable not found at: %GAME%
+    echo ERROR: Game executable not found at: !GAME!
     echo Check the path and try again.
     echo.
     pause
@@ -75,10 +72,10 @@ if not defined GAME (
   )
 )
 
-set "TGT=%GAME%\uiresources\localization"
-if not exist "%TGT%" (
+set "TGT=!GAME!\uiresources\localization"
+if not exist "!TGT!" (
   echo.
-  echo ERROR: Folder not found: %TGT%
+  echo ERROR: Folder not found: !TGT!
   echo Check game path. Make sure this is the correct Assetto Corsa EVO folder.
   echo.
   pause
@@ -87,28 +84,28 @@ if not exist "%TGT%" (
 
 echo.
 echo [STEP 1/2] Copying localization files...
-echo From: %SRC%
-echo To: %TGT%
+echo From: !SRC!
+echo To: !TGT!
 echo.
-copy /Y "%SRC%\ru.loc" "%TGT%\" >nul
+copy /Y "!SRC!ru.loc" "!TGT!\" >nul
 if errorlevel 1 (
   echo ERROR: Failed to copy ru.loc
   pause
   exit /b 1
 )
-copy /Y "%SRC%\ru.cars.loc" "%TGT%\" >nul
-copy /Y "%SRC%\ru.tooltips.loc" "%TGT%\" >nul
-copy /Y "%SRC%\ru.cars.release.loc" "%TGT%\" >nul
+copy /Y "!SRC!ru.cars.loc" "!TGT!\" >nul
+copy /Y "!SRC!ru.tooltips.loc" "!TGT!\" >nul
+copy /Y "!SRC!ru.cars.release.loc" "!TGT!\" >nul
 echo Localization files copied successfully.
 echo.
 
 echo [STEP 2/2] Patching game menu (adding Russian language)...
-if not exist "%~dp0patch_ru.ps1" (
+if not exist "!SAFEROOT!\patch_ru.ps1" (
   echo WARNING: patch_ru.ps1 not found. Skipping menu patch.
   echo You may need to run patch_ru.bat manually.
   echo.
 ) else (
-  powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0patch_ru.ps1" -GamePath "%GAME%" 2>nul
+  powershell -NoProfile -ExecutionPolicy Bypass -File "!SAFEROOT!\patch_ru.ps1" -GamePath "!GAME!" 2>nul
   if errorlevel 1 (
     echo.
     echo WARNING: Failed to apply menu patch automatically.
